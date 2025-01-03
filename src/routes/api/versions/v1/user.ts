@@ -1,4 +1,4 @@
-interface Request {
+interface LoginRequest {
     emailId: string;
     password: string;
 }
@@ -15,13 +15,13 @@ interface User {
 }
 
 export const userController = {
-    'login': function (model: any, request: Request, method: string, cb: (err: boolean, result: any) => void) {
+    'login': function (model: any, request: LoginRequest, method: string, cb: (err: boolean, result: any) => void) {
       if (method === 'POST') {
         const { emailId, password } = request;
   
         model.Users.Login({ emailId, password }, (err: any, user: User | null) => {
           if (err) {
-            cb(true, { success: false, error: err.error, code: err.code, errorMessages: err.errorMessages });
+            cb(true, { success: false, error: err });
           } else {
             cb(false, { success: true, userPresent: user ? 1 : 0, userDetails: user });
           }

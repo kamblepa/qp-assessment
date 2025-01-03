@@ -15,7 +15,7 @@ interface User {
     fname: string;
     lname: string;
     email: string;
-    password: string;
+    password?: string;
     role_id: number;
     role_name: string;
 }
@@ -30,7 +30,21 @@ const Users = (connection: any) => {
             if (err) {
                 callback(true);
             } else {
-                callback(false, user[0]);
+                if(user.length === 0) {
+                    callback(true)
+                } else {
+                    if (user[0].password) {
+                        const comparePass = bcrypt.compareSync(options.password, user[0].password)
+                        if(comparePass) {
+                            delete user[0].password;
+                            callback(false, user[0])
+                        } else {
+                            callback(true, false)
+                        }
+                    } else {
+                        callback(true, false)
+                    }
+                }
             }
         })
     }
