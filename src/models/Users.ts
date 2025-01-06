@@ -3,13 +3,13 @@ import bcrypt from 'bcryptjs';
 
 const saltRounds: number = 10;
 
-// Define types for the options object used in the Login method
+//types for the options object used in the Login method
 interface LoginOptions {
     emailId: string;
     password: string;
 }
 
-// Define a type for the user object returned from the database query
+//types for the user object returned from the database query
 interface User {
     id: number;
     fname: string;
@@ -20,7 +20,7 @@ interface User {
     role_name: string;
 }
 
-//Create the Users Module
+//the Users Module
 const Users = (connection: any) => {
     const module: Record<string, any> = {};
 
