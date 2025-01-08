@@ -31,7 +31,8 @@ interface DeleteItemOptions {
 const GroceryItems = (connection : any) => {
     const module : Record<string, any> = {}
 
-    module.AddItem = (options: addItemOptions, callback :(err: boolean, result?: boolean) => void): void => {
+    // Add items to Grocery Shop list
+    module.AddItem = (options: addItemOptions, callback :(err: any, result?: any) => void): void => {
         let quantityBlock : string = '';
         let descriptionBlock : string = '';
         if(options.quantity) {
@@ -49,7 +50,8 @@ const GroceryItems = (connection : any) => {
         })
     },
 
-    module.UpdateItem = (options: UpdateItemOptions, callback :(err: boolean, result?: boolean) => void): void => {
+    // Update item details in Grocery Shop list
+    module.UpdateItem = (options: UpdateItemOptions, callback :(err: any, result?: any) => void): void => {
         let quantityBlock : string = '';
         let descriptionBlock : string = '';
         if(options.quantity) {
@@ -67,7 +69,8 @@ const GroceryItems = (connection : any) => {
         })
     },
 
-    module.UpdateQuantity = (options: UpdateQuantityOptions, callback :(err: boolean, result?: boolean) => void): void => {
+    // Update item quantity 
+    module.UpdateQuantity = (options: UpdateQuantityOptions, callback :(err: any, result?: any) => void): void => {
         let quantityBlock : string = '';
         if(options.quantity < 0) {
             quantityBlock += `quantity = quantity - ${Math.abs(options.quantity)}`
@@ -83,7 +86,8 @@ const GroceryItems = (connection : any) => {
         })
     },
 
-    module.DeleteItem = (options: DeleteItemOptions, callback :(err: boolean, result?: boolean) => void): void => {
+    // Delete item from Grocery Shop list
+    module.DeleteItem = (options: DeleteItemOptions, callback :(err: any, result?: any) => void): void => {
         connection.query(`UPDATE grocery_items SET is_deleted = 1 WHERE id = ${options.id};`, (err: any, result: any) => {
             if(err) {
                 callback(true)
@@ -93,6 +97,7 @@ const GroceryItems = (connection : any) => {
         })
     },
 
+    // Get all items list from Grocery shop
     module.GetItemList = (callback :(err: any, result?: any) => void): void => {
         connection.query(`SELECT * FROM grocery_items WHERE is_deleted = 0;`, (err: any, result: any) => {
             if(err) {

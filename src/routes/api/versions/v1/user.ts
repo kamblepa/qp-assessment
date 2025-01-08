@@ -1,10 +1,9 @@
-import async from 'async';
 interface LoginRequest {
     emailId: string;
     password: string;
 }
 interface User {
-    // the structure of a user object based on your model's response
+    // the structure of a user object based on model's response
     id?: number;
     fname?: string;
     lname?: string;

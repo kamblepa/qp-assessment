@@ -6,7 +6,7 @@ type VersionsType = {
                 model: any,
                 request: any,
                 method: string,
-                cb: (err: boolean, result: any) => void
+                cb: (err: any, result: any) => void
             ) => void;
         };
     };

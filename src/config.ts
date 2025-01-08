@@ -15,24 +15,22 @@ interface DBConfig {
 interface Config {
     app: AppConfig;
     db: DBConfig;
-    secret: string;
 }
 
 const config: Config = {
     app: {
-        port: 3003,
+        port: 3000,
         env: 'dev', // dev, prod
-        hostname: 'http://localhost:3333'
+        hostname: 'http://localhost'
     },
     db: {
-        host: 'localhost',
+        host: process.env.DB_HOST || 'mysql',  // Use 'db' since Docker Compose resolves service names
         port: 3306,
-        user: 'root',
-        password: '',
-        name: 'grocery_db',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || 'root',
+        name: process.env.DB_NAME || 'grocery_db',
         debug: false
-    },
-    secret: 'secretisamythtrytochangeit'
+    }
 }
 
 export default config;

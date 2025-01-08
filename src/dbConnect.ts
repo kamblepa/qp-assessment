@@ -1,8 +1,8 @@
-import mysql, { Pool, PoolConfig } from 'mysql';
+import mysql, { Pool, PoolOptions } from 'mysql2';
 import config from './config';
 
 // Define the database configuration type
-interface DBConfig extends PoolConfig {
+interface DBConfig extends PoolOptions {
     multipleStatements: boolean;
 }
 

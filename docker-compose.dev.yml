@@ -1,0 +1,38 @@
+# We will use Docker compose v3.9
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: grocery_db
+    ports:
+      - "3307:3306"
+    networks:
+      - app_network
+    volumes:
+      - ./grocery_db_backup.sql:/docker-entrypoint-initdb.d/grocery_db_backup.sql  # Mount SQL file
+
+  api:
+    image: node-docker-demo:latest # Specify custom Node.js image name and tag
+    build: .
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3307
+      DB_USER: root
+      DB_PASSWORD: root_password
+    depends_on:
+      - mysql
+    networks:
+      - app_network
+    command: npm run start
+    ports:
+      - '3000:3000' # Specify the exposed port, we will need this to access the app from local machine
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+networks:
+  app_network:
+    driver: bridge

@@ -25,7 +25,7 @@ const Users = (connection: any) => {
     const module: Record<string, any> = {};
 
     /* Login Method */
-    module.Login = (options: LoginOptions, callback: (err: boolean, result?: User | boolean) => void): void => {
+    module.Login = (options: LoginOptions, callback: (err: any, result?: User | boolean) => void): void => {
         connection.query(`SELECT * FROM users WHERE email = '${options.emailId}';`, (err: any, user: User[]) => {
             if (err) {
                 callback(true);
